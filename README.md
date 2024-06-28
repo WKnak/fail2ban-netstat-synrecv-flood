@@ -21,6 +21,12 @@ cd fail2ban-netstat-synrecv-flood
 
 2. Schedule the bash script to run periodically with crontab (each minute)
 
+Make it executable
+```
+chmod +x generate_netstat_synrecv_flood_log.sh
+```
+
+Add to Crontab
 ```
 crontab -e
 ```
@@ -28,7 +34,7 @@ crontab -e
 add the line 
 
 ```
-/usr/bin/python3 /usr/local/src/fail2ban-netstat-synrecv-flood/generate_netstat_synrecv_flood_log.sh
+* * * * * /usr/local/src/fail2ban-netstat-synrecv-flood/generate_netstat_synrecv_flood_log.sh
 ```
 
 After a minute, check if the file was created.
@@ -55,9 +61,25 @@ If the log file already contains some entries, test the settingins using this co
 fail2ban-regex /var/log/fail2ban_netstat_synrecv_flood.log /etc/fail2ban/filter.d/netstat_synrecv.conf
 ```
 
-If everything is OK, it will find some matches. 
+4.1. ✅ If everything is OK, it will find some matches. 
 
-Advanced: Adjust the fileter `failregex` to only match port 443, or other filter you want to block.
+Example output, go to 5.
+```
+Lines: 244 lines, 0 ignored, *244 matched*, 0 missed
+[processed in 0.02 sec]
+```
+
+4.2. 💢 (or) If it fails and you have a old version of Fail2Ban: 
+```
+Lines: 244 lines, 0 ignored, 0 matched, *244 missed*
+[processed in 0.02 sec]
+```
+
+💡 Then adjust the bash script `generate_netstat_synrecv_flood_log.sh` to use the alternative command line to include the datetime
+
+4.3. Advanced filtering
+
+Adjust the filter `failregex` to only match port `:443`, or other filter you want to block.
 
 5. Reload Fail2Ban and check jail Status
 
