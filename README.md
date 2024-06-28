@@ -75,7 +75,7 @@ Lines: 244 lines, 0 ignored, 0 matched, *244 missed*
 [processed in 0.02 sec]
 ```
 
-💡 Then adjust the bash script `generate_netstat_synrecv_flood_log.sh` to use the alternative command line to include the datetime
+💡 Then adjust the bash script `generate_netstat_synrecv_flood_log.sh compatibility` to run with the `compatibility` command line argument to include the datetime
 
 4.3. Advanced filtering
 
