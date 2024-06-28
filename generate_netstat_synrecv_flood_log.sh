@@ -7,8 +7,10 @@
 #
 # See documentation in GitHub
 
-# for newer versions for fail2ban
-netstat -an | grep SYN_RECV > /var/log/fail2ban_netstat_synrecv_flood.log
-
-# for older versions of fail2ban, logs lines are suppose to have date and time
-# netstat -an | grep SYN_RECV | sed -r "s/tcp6?/$(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)/g" > /var/log/netstat_syn_recv_attack.log
+if [ "$1" = "compatibility" ]; then
+    # for older versions of fail2ban, logs lines are suppose to have date and time
+    netstat -an | grep SYN_RECV | sed -r "s/tcp6?/$(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)/g" > /var/log/fail2ban_netstat_synrecv_flood.log
+else
+    # default, for newer versions for fail2ban
+    netstat -an | grep SYN_RECV > /var/log/fail2ban_netstat_synrecv_flood.log
+fi
